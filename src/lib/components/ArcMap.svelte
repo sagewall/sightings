@@ -9,6 +9,7 @@
 	export let mapViewProperties: __esri.MapViewProperties | undefined = undefined;
 	export let webMapProperties: __esri.WebMapProperties | undefined = undefined;
 
+	export let centerGraphic = true;
 	export let layerList = false;
 	export let legend = false;
 
@@ -31,6 +32,11 @@
 				const { createMap, createMapView } = await import('../arcgisUtils');
 				map = await createMap(mapProperties);
 				view = await createMapView(viewDiv, map, mapViewProperties);
+			}
+
+			if (centerGraphic) {
+				const { addCenterGraphic } = await import('../arcgisUtils');
+				addCenterGraphic(view);
 			}
 
 			if (featureLayers) {
