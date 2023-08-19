@@ -1,5 +1,18 @@
 <script lang="ts">
 	import type { BigfootSighting } from '$lib/types';
+	import ArcMap from './ArcMap.svelte';
+
+	const mapProperties: __esri.MapProperties = {
+		basemap: 'topo-vector'
+	};
+
+	const featureLayers: __esri.FeatureLayerProperties[] = [
+		{
+			portalItem: {
+				id: 'afc1428f16f94579950431add9625b43'
+			}
+		}
+	];
 
 	export let bigfootSighting: BigfootSighting;
 	export let open = false;
@@ -43,16 +56,29 @@
 		>
 	</header>
 	{#if open}
-		<section class="px-10">
-			<span class="text-lg">Location details</span>
-			<p>
-				{bigfootSighting.attributes.latitude}, {bigfootSighting.attributes.longitude}
-			</p>
-			<p class="mb-2">
-				{bigfootSighting.attributes.location_details}
-			</p>
-			<span class="text-lg">Observation</span>
-			<p>{bigfootSighting.attributes.observed}</p>
-		</section>
+		<div class="flex flex-row">
+			<section class="basis-1/2 flex flex-col">
+				<span class="text-lg">Location details</span>
+				<p>
+					{bigfootSighting.attributes.latitude}, {bigfootSighting.attributes.longitude}
+				</p>
+				<p class="mb-2">
+					{bigfootSighting.attributes.location_details}
+				</p>
+				<span class="text-lg">Observation</span>
+				<p>{bigfootSighting.attributes.observed}</p>
+			</section>
+
+			<div class="basis-1/2">
+				<ArcMap
+					{mapProperties}
+					mapViewProperties={{
+						center: [bigfootSighting.attributes.longitude, bigfootSighting.attributes.latitude],
+						zoom: 10
+					}}
+					{featureLayers}
+				/>
+			</div>
+		</div>
 	{/if}
 </section>

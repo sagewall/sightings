@@ -19,6 +19,7 @@ module.exports = {
 		node: true
 	},
 	globals: {
+		__esri: 'readonly',
 		GeolocationPosition: 'readonly'
 	},
 	overrides: [
