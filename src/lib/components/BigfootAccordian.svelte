@@ -69,7 +69,7 @@
 				<p>{bigfootSighting.attributes.observed}</p>
 			</section>
 
-			<div class="basis-1/2">
+			<div class="basis-1/2 min-h-[500px]">
 				<ArcMap
 					{mapProperties}
 					mapViewProperties={{
