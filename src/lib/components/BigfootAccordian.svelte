@@ -8,6 +8,7 @@
 
 	const featureLayers: __esri.FeatureLayerProperties[] = [
 		{
+			popupEnabled: false,
 			portalItem: {
 				id: 'afc1428f16f94579950431add9625b43'
 			}
