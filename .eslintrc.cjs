@@ -18,6 +18,9 @@ module.exports = {
 		es2017: true,
 		node: true
 	},
+	globals: {
+		GeolocationPosition: 'readonly'
+	},
 	overrides: [
 		{
 			files: ['*.svelte'],

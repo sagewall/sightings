@@ -46,24 +46,24 @@ export async function load({ fetch }) {
 		if (response.status === 404) {
 			return {
 				position,
-				sightings: {
+				bigfootSightings: {
 					features: []
 				} as BigfootSightings
 			};
 		}
 
 		if (response.status === 200) {
-			const sightings: BigfootSightings = await response.json();
+			const bigfootSightings: BigfootSightings = await response.json();
 			return {
 				position,
-				sightings
+				bigfootSightings
 			};
 		}
 		throw error(response.status);
 	} catch {
 		return {
 			position: undefined,
-			sightings: {
+			bigfootSightings: {
 				features: []
 			} as BigfootSightings
 		};

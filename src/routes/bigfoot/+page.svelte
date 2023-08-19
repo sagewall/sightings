@@ -4,7 +4,7 @@
 	export let data;
 </script>
 
-<h2 class="text-2xl font-extrabold">Bigfoot Sightings</h2>
+<h2 class="font-extrabold text-2xl">Bigfoot Sightings</h2>
 {#if data}
-	<BigfootList position={data.position} sightings={data.sightings} />
+	<BigfootList position={data.position} bigfootSightings={data.bigfootSightings} />
 {/if}
