@@ -56,7 +56,7 @@
 		>
 	</header>
 	{#if open}
-		<div class="flex flex-row">
+		<div class="flex flex-row space-x-3">
 			<section class="basis-1/2 flex flex-col">
 				<span class="text-lg">Location details</span>
 				<p>
