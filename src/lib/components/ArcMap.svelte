@@ -42,6 +42,7 @@
 				const { addFeatureLayer } = await import('../arcgisUtils');
 				featureLayers.forEach((featureLayerProperties) => {
 					map && addFeatureLayer(map, featureLayerProperties);
+					webMap && addFeatureLayer(webMap, featureLayerProperties);
 				});
 			}
 

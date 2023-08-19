@@ -35,7 +35,7 @@ export const addCenterGraphic = async (view: MapView | undefined) => {
 };
 
 export const addFeatureLayer = async (
-	map: Map,
+	map: Map | WebMap,
 	featureLayerProperties: __esri.FeatureLayerProperties
 ) => {
 	const featureLayer = new FeatureLayer(featureLayerProperties);
@@ -75,7 +75,7 @@ export const createMap = async (mapProperties: __esri.MapProperties | undefined)
 
 export const createMapView = async (
 	container: HTMLDivElement,
-	map: Map,
+	map: Map | WebMap,
 	mapViewProperties: __esri.MapViewProperties | undefined
 ) => {
 	if (mapViewProperties) {
