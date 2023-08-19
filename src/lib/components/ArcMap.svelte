@@ -4,14 +4,13 @@
 	import type MapView from '@arcgis/core/views/MapView';
 	import { onDestroy, onMount } from 'svelte';
 
+	export let centerGraphic = true;
 	export let featureLayers: __esri.FeatureLayerProperties[] | undefined = undefined;
+	export let layerList = false;
+	export let legend = false;
 	export let mapProperties: __esri.MapProperties | undefined = undefined;
 	export let mapViewProperties: __esri.MapViewProperties | undefined = undefined;
 	export let webMapProperties: __esri.WebMapProperties | undefined = undefined;
-
-	export let centerGraphic = true;
-	export let layerList = false;
-	export let legend = false;
 
 	const isSsr = typeof window === 'undefined';
 	let map: Map | undefined = undefined;
