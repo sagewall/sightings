@@ -7,10 +7,10 @@ test('index page has expected heading', async ({ page }) => {
 
 test('bigfoot page has expected heading', async ({ page }) => {
 	await page.goto('/bigfoot');
-	await expect(page.getByRole('heading', { name: 'Bigfoot' })).toBeVisible();
+	await expect(page.getByRole('heading', { name: 'Bigfoot Sightings' })).toBeVisible();
 });
 
 test('ufos page has expected heading', async ({ page }) => {
 	await page.goto('/ufos');
-	await expect(page.getByRole('heading', { name: 'UFOs' })).toBeVisible();
+	await expect(page.getByRole('heading', { name: 'UFO Sightings' })).toBeVisible();
 });
