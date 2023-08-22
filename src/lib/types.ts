@@ -40,3 +40,30 @@ export type BigfootSighting = {
 export type BigfootSightings = {
 	features: BigfootSighting[];
 };
+
+export type UFOSighting = {
+	attributes: {
+		summary: string;
+		country: string;
+		city: string;
+		state: string;
+		date_time: number;
+		shape: string;
+		duration: string;
+		stats: string;
+		report_link: string;
+		text: string;
+		posted: number;
+		city_latitude: number;
+		city_longitude: number;
+		ObjectId: number;
+	};
+	geometry: {
+		x: number;
+		y: number;
+	};
+};
+
+export type UFOSightings = {
+	features: UFOSighting[];
+};
