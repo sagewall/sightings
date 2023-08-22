@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { BigfootSightings } from '$lib/types';
-	import Accordian from './BigfootAccordian.svelte';
+	import BigfootAccordian from './BigfootAccordian.svelte';
 
 	export let position: GeolocationPosition | undefined;
 	export let bigfootSightings: BigfootSightings;
@@ -15,6 +15,6 @@
 </h3>
 <ul>
 	{#each bigfootSightings.features as bigfootSighting}
-		<Accordian {bigfootSighting} />
+		<BigfootAccordian {bigfootSighting} />
 	{/each}
 </ul>
