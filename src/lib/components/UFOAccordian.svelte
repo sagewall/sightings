@@ -69,6 +69,12 @@
 				<p class="mb-2">{ufoSighting.attributes.duration}</p>
 				<span class="text-lg">Observation</span>
 				<p>{ufoSighting.attributes.text}</p>
+				<p>
+					<a
+						class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+						href={ufoSighting.attributes.report_link}>NUFORC Report</a
+					>
+				</p>
 			</section>
 
 			<div class="basis-1/2 min-h-[500px]">
