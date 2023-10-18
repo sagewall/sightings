@@ -2,7 +2,6 @@ import Color from '@arcgis/core/Color';
 import Graphic from '@arcgis/core/Graphic';
 import Map from '@arcgis/core/Map';
 import WebMap from '@arcgis/core/WebMap';
-import '@arcgis/core/assets/esri/themes/light/main.css';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import SimpleLineSymbol from '@arcgis/core/symbols/SimpleLineSymbol';
 import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
