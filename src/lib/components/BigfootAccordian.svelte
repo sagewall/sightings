@@ -1,18 +1,17 @@
 <script lang="ts">
 	import type { BigfootSighting } from '$lib/types';
+	import Point from '@arcgis/core/geometry/Point';
+	import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+	import PortalItem from '@arcgis/core/portal/PortalItem';
 	import ArcMap from './ArcMap.svelte';
 
-	const mapProperties: __esri.MapProperties = {
-		basemap: 'topo-vector'
-	};
-
-	const featureLayers: __esri.FeatureLayerProperties[] = [
-		{
+	const featureLayers: FeatureLayer[] = [
+		new FeatureLayer({
 			popupEnabled: false,
-			portalItem: {
+			portalItem: new PortalItem({
 				id: 'afc1428f16f94579950431add9625b43'
-			}
-		}
+			})
+		})
 	];
 
 	export let bigfootSighting: BigfootSighting;
@@ -72,11 +71,13 @@
 
 			<div class="basis-1/2 min-h-[500px]">
 				<ArcMap
-					{mapProperties}
-					mapViewProperties={{
-						center: [bigfootSighting.attributes.longitude, bigfootSighting.attributes.latitude],
-						zoom: 10
-					}}
+					center={new Point({
+						latitude: bigfootSighting.attributes.latitude,
+						longitude: bigfootSighting.attributes.longitude
+					})}
+					layerList
+					legend
+					zoom={10}
 					{featureLayers}
 				/>
 			</div>

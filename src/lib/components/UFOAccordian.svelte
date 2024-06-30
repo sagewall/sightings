@@ -1,18 +1,16 @@
 <script lang="ts">
 	import type { UFOSighting } from '$lib/types';
+	import Point from '@arcgis/core/geometry/Point';
+	import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 	import ArcMap from './ArcMap.svelte';
 
-	const mapProperties: __esri.MapProperties = {
-		basemap: 'topo-vector'
-	};
-
-	const featureLayers: __esri.FeatureLayerProperties[] = [
-		{
+	const featureLayers: FeatureLayer[] = [
+		new FeatureLayer({
 			popupEnabled: false,
 			portalItem: {
 				id: 'bdf4bc300ff64c9fa789605eab19aae2'
 			}
-		}
+		})
 	];
 
 	export let ufoSighting: UFOSighting;
@@ -79,11 +77,11 @@
 
 			<div class="basis-1/2 min-h-[500px]">
 				<ArcMap
-					{mapProperties}
-					mapViewProperties={{
-						center: [ufoSighting.attributes.city_longitude, ufoSighting.attributes.city_latitude],
-						zoom: 10
-					}}
+					center={new Point({
+						latitude: ufoSighting.attributes.city_latitude,
+						longitude: ufoSighting.attributes.city_longitude
+					})}
+					zoom={10}
 					{featureLayers}
 				/>
 			</div>

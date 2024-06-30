@@ -1,70 +1,92 @@
 <script lang="ts">
+	import Color from '@arcgis/core/Color';
+	import Graphic from '@arcgis/core/Graphic';
 	import type Map from '@arcgis/core/Map';
-	import type WebMap from '@arcgis/core/WebMap';
-	import type MapView from '@arcgis/core/views/MapView';
-	import { onDestroy, onMount } from 'svelte';
+	import '@arcgis/core/assets/esri/themes/light/main.css';
+	import Point from '@arcgis/core/geometry/Point';
+	import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+	import SimpleLineSymbol from '@arcgis/core/symbols/SimpleLineSymbol';
+	import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
+	import type { ArcgisMap } from '@arcgis/map-components/dist/components/arcgis-map';
+	import { onMount } from 'svelte';
 
+	export let center = new Point();
 	export let centerGraphic = true;
-	export let featureLayers: __esri.FeatureLayerProperties[] | undefined = undefined;
+	export let featureLayers: FeatureLayer[] = [];
 	export let layerList = false;
 	export let legend = false;
-	export let mapProperties: __esri.MapProperties | undefined = undefined;
-	export let mapViewProperties: __esri.MapViewProperties | undefined = undefined;
-	export let webMapProperties: __esri.WebMapProperties | undefined = undefined;
+	export let zoom = 10;
 
-	const isSsr = typeof window === 'undefined';
-	let map: Map | undefined = undefined;
-	let view: MapView | undefined = undefined;
-	let webMap: WebMap | undefined = undefined;
+	let arcgisMap: ArcgisMap | null = null;
+	let mounted = false;
 
-	let viewDiv: HTMLDivElement;
+	async function addCenterGraphic(arcgisMap: ArcgisMap) {
+		const simpleMarkerSymbol = new SimpleMarkerSymbol({
+			outline: new SimpleLineSymbol({
+				color: new Color([0, 0, 0, 0.75]),
+				style: 'solid',
+				width: 1
+			}),
+			size: 24,
+			style: 'circle'
+		});
+
+		const centerGraphic = new Graphic({
+			geometry: arcgisMap?.center,
+			symbol: simpleMarkerSymbol
+		});
+
+		arcgisMap?.graphics.add(centerGraphic);
+	}
+
+	async function addFeatureLayer(map: Map, featureLayer: FeatureLayer) {
+		map.add(featureLayer);
+	}
 
 	onMount(async () => {
-		if (!map && !isSsr) {
-			if (webMapProperties) {
-				const { createWebMap, createMapView } = await import('../arcgisUtils');
-				webMap = await createWebMap(webMapProperties);
-				view = await createMapView(viewDiv, webMap, mapViewProperties);
-			}
+		await import('@arcgis/map-components/dist/components/arcgis-layer-list');
+		await import('@arcgis/map-components/dist/components/arcgis-legend');
+		await import('@arcgis/map-components/dist/components/arcgis-map');
+		await import('@arcgis/map-components/dist/components/arcgis-placement');
+		mounted = true;
+	});
 
-			if (mapProperties) {
-				const { createMap, createMapView } = await import('../arcgisUtils');
-				map = await createMap(mapProperties);
-				view = await createMapView(viewDiv, map, mapViewProperties);
-			}
+	function handleArcgisViewReadyChange(event: CustomEvent) {
+		arcgisMap = event.target as ArcgisMap;
 
-			if (centerGraphic) {
-				const { addCenterGraphic } = await import('../arcgisUtils');
-				addCenterGraphic(view);
-			}
-
-			if (featureLayers) {
-				const { addFeatureLayer } = await import('../arcgisUtils');
-				featureLayers.forEach((featureLayerProperties) => {
-					map && addFeatureLayer(map, featureLayerProperties);
-					webMap && addFeatureLayer(webMap, featureLayerProperties);
-				});
-			}
-
-			if (layerList) {
-				const { addLayerList } = await import('../arcgisUtils');
-				addLayerList(view);
-			}
-
-			if (legend) {
-				const { addLegend } = await import('../arcgisUtils');
-				addLegend(view);
-			}
+		if (arcgisMap && centerGraphic) {
+			addCenterGraphic(arcgisMap);
 		}
-	});
 
-	onDestroy(() => {
-		view && view.destroy();
-	});
+		if (featureLayers) {
+			featureLayers.forEach((featureLayer) => {
+				if (arcgisMap) {
+					addFeatureLayer(arcgisMap.map, featureLayer);
+				}
+			});
+		}
+	}
 </script>
 
-{#if !isSsr}
-	<div id="mapViewDiv" bind:this={viewDiv} class="flex-1 h-full" />
+{#if mounted}
+	<arcgis-map
+		basemap="topo-vector"
+		{center}
+		class="flex-1 h-full"
+		on:arcgisViewReadyChange={handleArcgisViewReadyChange}
+		{zoom}
+	>
+		<arcgis-placement position="top-right">
+			{#if layerList}
+				<arcgis-layer-list />
+			{/if}
+		</arcgis-placement>
+		<arcgis-placement position="bottom-right">
+			{#if legend}
+				<arcgis-legend />
+			{/if}
+		</arcgis-placement>
+	</arcgis-map>
 {:else}
-	<div>No map</div>
+	<div>Loading</div>
 {/if}
