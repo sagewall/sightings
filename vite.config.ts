@@ -1,9 +1,12 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
-import { visualizer } from 'rollup-plugin-visualizer';
 import { bundleStats } from 'rollup-plugin-bundle-stats';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+	build: {
+		chunkSizeWarningLimit: 1024
+	},
 	plugins: [
 		bundleStats({
 			baseline: true
