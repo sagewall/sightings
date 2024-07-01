@@ -7,6 +7,8 @@
 
 <ul>
 	{#each ufoSightings.features as ufoSighting}
-		<UFOAccordian {ufoSighting} />
+		<li>
+			<UFOAccordian {ufoSighting} />
+		</li>
 	{/each}
 </ul>

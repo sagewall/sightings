@@ -24,7 +24,7 @@
 
 <section class="mb-7">
 	<header class="flex space-x-4 font-bold text-xl">
-		<button class="text-left" on:click={onClick}>
+		<button aria-label="Toggle details" class="text-left" on:click={onClick}>
 			{#if open}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

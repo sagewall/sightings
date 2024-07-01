@@ -7,6 +7,8 @@
 
 <ul>
 	{#each bigfootSightings.features as bigfootSighting}
-		<BigfootAccordian {bigfootSighting} />
+		<li>
+			<BigfootAccordian {bigfootSighting} />
+		</li>
 	{/each}
 </ul>
