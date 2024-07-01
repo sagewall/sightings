@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+	import icon from '$lib/assets/icon.png';
 
 	const routes = [
 		{ name: 'Dashboard', href: '/' },
@@ -10,7 +11,7 @@
 
 <nav class="bg-white flex h-16 px-4 items-center justify-between">
 	<div class="flex-shrink-0">
-		<img class="h-8" src="./favicon.png" alt="an icon depicting bigfoot" />
+		<img class="h-8" src={icon} alt="An icon depicting bigfoot" />
 	</div>
 	<div class="flex">
 		<h1 class="text-2xl font-bold">Sightings</h1>
