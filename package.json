@@ -41,6 +41,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@arcgis/map-components": "^4.30.1"
+		"@arcgis/map-components": "^4.30.1",
+		"@esri/calcite-components": "2.8.5"
 	}
 }
