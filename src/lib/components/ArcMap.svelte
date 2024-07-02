@@ -21,7 +21,6 @@
 	export let zoom = 10;
 
 	let arcgisMap: ArcgisMap | null = null;
-	let mounted = false;
 
 	async function addCenterGraphic(arcgisMap: ArcgisMap) {
 		const simpleMarkerSymbol = new SimpleMarkerSymbol({
@@ -48,7 +47,6 @@
 		await import('@arcgis/map-components/dist/components/arcgis-map');
 		await import('@arcgis/map-components/dist/components/arcgis-placement');
 		await import('@arcgis/map-components/dist/components/arcgis-search');
-		mounted = true;
 	});
 
 	function handleArcgisViewReadyChange(event: CustomEvent) {
@@ -64,26 +62,22 @@
 	}
 </script>
 
-{#if mounted}
-	<arcgis-map
-		basemap="topo-vector"
-		{center}
-		class="flex-1"
-		on:arcgisViewReadyChange={handleArcgisViewReadyChange}
-		{zoom}
-	>
-		{#if search}
-			<arcgis-search position="top-right" {sources} />
-		{/if}
+<arcgis-map
+	basemap="topo-vector"
+	{center}
+	class="flex-1"
+	on:arcgisViewReadyChange={handleArcgisViewReadyChange}
+	{zoom}
+>
+	{#if search}
+		<arcgis-search position="top-right" {sources} />
+	{/if}
 
-		{#if layerList}
-			<arcgis-layer-list position="top-right" />
-		{/if}
+	{#if layerList}
+		<arcgis-layer-list position="top-right" />
+	{/if}
 
-		{#if legend}
-			<arcgis-legend position="bottom-right" />
-		{/if}
-	</arcgis-map>
-{:else}
-	<div>Loading</div>
-{/if}
+	{#if legend}
+		<arcgis-legend position="bottom-right" />
+	{/if}
+</arcgis-map>
