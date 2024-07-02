@@ -6,7 +6,7 @@
 <div class="flex flex-col min-h-full">
 	<Navigation />
 
-	<main class="flex-1 p-6">
+	<main class="flex flex-1 p-6">
 		<slot />
 	</main>
 </div>

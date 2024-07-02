@@ -5,7 +5,8 @@
 	const routes = [
 		{ name: 'Dashboard', href: '/' },
 		{ name: 'Bigfoot', href: '/bigfoot' },
-		{ name: 'UFOs', href: '/ufos' }
+		{ name: 'UFOs', href: '/ufos' },
+		{ name: 'Search', href: '/search' }
 	];
 </script>
 

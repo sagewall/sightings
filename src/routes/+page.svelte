@@ -10,14 +10,16 @@
 	<meta name="description" content="Recent Bigfoot and UFO sightings." />
 </svelte:head>
 
-<h2 class="font-extrabold text-3xl">Dashboard</h2>
+<div class="flex-col">
+	<h2 class="font-extrabold text-3xl">Dashboard</h2>
 
-<h3 class="font-extrabold text-2xl mb-3">Three most recent bigfoot sightings</h3>
-{#if data.bigfootSightings}
-	<BigfootSummary bigfootSightings={data.bigfootSightings} />
-{/if}
+	<h3 class="font-extrabold text-2xl mb-3">Three most recent bigfoot sightings</h3>
+	{#if data.bigfootSightings}
+		<BigfootSummary bigfootSightings={data.bigfootSightings} />
+	{/if}
 
-<h3 class="font-extrabold text-2xl">Three most recent UFO sightings</h3>
-{#if data.ufoSightings}
-	<UFOSummary ufoSightings={data.ufoSightings} />
-{/if}
+	<h3 class="font-extrabold text-2xl">Three most recent UFO sightings</h3>
+	{#if data.ufoSightings}
+		<UFOSummary ufoSightings={data.ufoSightings} />
+	{/if}
+</div>

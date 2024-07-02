@@ -75,8 +75,6 @@
 						latitude: bigfootSighting.attributes.latitude,
 						longitude: bigfootSighting.attributes.longitude
 					})}
-					layerList
-					legend
 					zoom={10}
 					{featureLayers}
 				/>

@@ -1,13 +1,14 @@
 <script lang="ts">
 	import Color from '@arcgis/core/Color';
 	import Graphic from '@arcgis/core/Graphic';
-	import type Map from '@arcgis/core/Map';
 	import '@arcgis/core/assets/esri/themes/light/main.css';
 	import Point from '@arcgis/core/geometry/Point';
 	import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 	import SimpleLineSymbol from '@arcgis/core/symbols/SimpleLineSymbol';
 	import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
+	import type SearchSource from '@arcgis/core/widgets/Search/SearchSource';
 	import type { ArcgisMap } from '@arcgis/map-components/dist/components/arcgis-map';
+
 	import { onMount } from 'svelte';
 
 	export let center = new Point();
@@ -15,6 +16,8 @@
 	export let featureLayers: FeatureLayer[] = [];
 	export let layerList = false;
 	export let legend = false;
+	export let search = false;
+	export let sources: SearchSource[] = [];
 	export let zoom = 10;
 
 	let arcgisMap: ArcgisMap | null = null;
@@ -39,15 +42,12 @@
 		arcgisMap?.graphics.add(centerGraphic);
 	}
 
-	async function addFeatureLayer(map: Map, featureLayer: FeatureLayer) {
-		map.add(featureLayer);
-	}
-
 	onMount(async () => {
 		await import('@arcgis/map-components/dist/components/arcgis-layer-list');
 		await import('@arcgis/map-components/dist/components/arcgis-legend');
 		await import('@arcgis/map-components/dist/components/arcgis-map');
 		await import('@arcgis/map-components/dist/components/arcgis-placement');
+		await import('@arcgis/map-components/dist/components/arcgis-search');
 		mounted = true;
 	});
 
@@ -59,11 +59,7 @@
 		}
 
 		if (featureLayers) {
-			featureLayers.forEach((featureLayer) => {
-				if (arcgisMap) {
-					addFeatureLayer(arcgisMap.map, featureLayer);
-				}
-			});
+			arcgisMap.addLayers(featureLayers);
 		}
 	}
 </script>
@@ -72,20 +68,21 @@
 	<arcgis-map
 		basemap="topo-vector"
 		{center}
-		class="flex-1 h-full"
+		class="flex-1"
 		on:arcgisViewReadyChange={handleArcgisViewReadyChange}
 		{zoom}
 	>
-		<arcgis-placement position="top-right">
-			{#if layerList}
-				<arcgis-layer-list />
-			{/if}
-		</arcgis-placement>
-		<arcgis-placement position="bottom-right">
-			{#if legend}
-				<arcgis-legend />
-			{/if}
-		</arcgis-placement>
+		{#if search}
+			<arcgis-search position="top-right" {sources} />
+		{/if}
+
+		{#if layerList}
+			<arcgis-layer-list position="top-right" />
+		{/if}
+
+		{#if legend}
+			<arcgis-legend position="bottom-right" />
+		{/if}
 	</arcgis-map>
 {:else}
 	<div>Loading</div>
