@@ -58,7 +58,7 @@ export async function load({ fetch }) {
 			} as BigfootSightings,
 			ufoSightings: {
 				features: []
-			}
+			} as UFOSightings
 		};
 	}
 }

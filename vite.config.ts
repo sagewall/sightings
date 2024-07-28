@@ -1,4 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import { svelteTesting } from '@testing-library/svelte/vite';
 import { bundleStats } from 'rollup-plugin-bundle-stats';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vitest/config';
@@ -12,6 +13,7 @@ export default defineConfig({
 			baseline: true
 		}),
 		sveltekit(),
+		svelteTesting(),
 		visualizer({
 			brotliSize: true,
 			emitFile: true,
@@ -21,6 +23,8 @@ export default defineConfig({
 		})
 	],
 	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
+		environment: 'jsdom',
+		include: ['src/**/*.{test,spec}.{js,ts}'],
+		setupFiles: ['./vitest-setup.js']
 	}
 });

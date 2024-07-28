@@ -48,8 +48,9 @@
 				</svg>
 			{/if}
 		</button>
-		<span
-			>{new Date(ufoSighting.attributes.date_time).toLocaleDateString()} - {ufoSighting.attributes
+		<span data-testid="time-and-location"
+			>{ufoSighting.attributes.date_time &&
+				new Date(ufoSighting.attributes.date_time).toLocaleDateString()} - {ufoSighting.attributes
 				.city}, {ufoSighting.attributes.state}</span
 		>
 	</header>
@@ -57,34 +58,37 @@
 		<div class="flex flex-row space-x-3">
 			<section class="basis-1/2 flex flex-col">
 				<span class="text-lg">Location details</span>
-				<p>
+				<p data-testid="location-details">
 					{ufoSighting.attributes.city_latitude}, {ufoSighting.attributes.city_longitude}
 				</p>
-				<p class="mb-2">
+				<p class="mb-2" data-testid="summary">
 					{ufoSighting.attributes.summary}
 				</p>
 				<span class="text-lg">Duration</span>
-				<p class="mb-2">{ufoSighting.attributes.duration}</p>
+				<p class="mb-2" data-testid="duration">{ufoSighting.attributes.duration}</p>
 				<span class="text-lg">Observation</span>
-				<p>{ufoSighting.attributes.text}</p>
+				<p data-testid="observation">{ufoSighting.attributes.text}</p>
 				<p>
 					<a
 						class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+						data-testid="report-link"
 						href={ufoSighting.attributes.report_link}>NUFORC Report</a
 					>
 				</p>
 			</section>
 
-			<div class="basis-1/2 min-h-[500px]">
-				<ArcMap
-					center={new Point({
-						latitude: ufoSighting.attributes.city_latitude,
-						longitude: ufoSighting.attributes.city_longitude
-					})}
-					zoom={10}
-					{featureLayers}
-				/>
-			</div>
+			{#if ufoSighting.attributes.city_latitude && ufoSighting.attributes.city_longitude}
+				<div class="basis-1/2 min-h-[500px]" data-testid="arcgis-map-container">
+					<ArcMap
+						center={new Point({
+							latitude: ufoSighting.attributes.city_latitude,
+							longitude: ufoSighting.attributes.city_longitude
+						})}
+						zoom={10}
+						{featureLayers}
+					/>
+				</div>
+			{/if}
 		</div>
 	{/if}
 </section>

@@ -49,8 +49,9 @@
 				</svg>
 			{/if}
 		</button>
-		<span
-			>{new Date(bigfootSighting.attributes.date).toLocaleDateString()} - {bigfootSighting.attributes.title.split(
+		<span data-testid="time-and-title"
+			>{bigfootSighting.attributes.date &&
+				new Date(bigfootSighting.attributes.date).toLocaleDateString()} - {bigfootSighting.attributes.title?.split(
 				':'
 			)[1]}</span
 		>
@@ -59,26 +60,28 @@
 		<div class="flex flex-row space-x-3">
 			<section class="basis-1/2 flex flex-col">
 				<span class="text-lg">Location details</span>
-				<p>
+				<p data-testid="coordinates">
 					{bigfootSighting.attributes.latitude}, {bigfootSighting.attributes.longitude}
 				</p>
-				<p class="mb-2">
+				<p class="mb-2" data-testid="location-details">
 					{bigfootSighting.attributes.location_details}
 				</p>
 				<span class="text-lg">Observation</span>
-				<p>{bigfootSighting.attributes.observed}</p>
+				<p data-testid="observed">{bigfootSighting.attributes.observed}</p>
 			</section>
 
-			<div class="basis-1/2 min-h-[500px]">
-				<ArcMap
-					center={new Point({
-						latitude: bigfootSighting.attributes.latitude,
-						longitude: bigfootSighting.attributes.longitude
-					})}
-					zoom={10}
-					{featureLayers}
-				/>
-			</div>
+			{#if bigfootSighting.attributes.latitude && bigfootSighting.attributes.longitude}
+				<div class="basis-1/2 min-h-[500px]">
+					<ArcMap
+						center={new Point({
+							latitude: bigfootSighting.attributes.latitude,
+							longitude: bigfootSighting.attributes.longitude
+						})}
+						zoom={10}
+						{featureLayers}
+					/>
+				</div>
+			{/if}
 		</div>
 	{/if}
 </section>
